@@ -1,0 +1,58 @@
+with open('wc_winners.html', 'r') as file:
+    content = file.read()
+soup = BeautifulSoup(content, 'lxml')
+team_tags = soup.find_all('strong')
+
+# puts team names into a list
+team_list = []
+for team in team_tags:
+    team_name = team.text
+    team_list.append(team_name)
+    if team_name == 'Uruguay':
+       break
+
+# alphabeltize list
+team_list.sort()
+print(team_list)
+
+# if the country is different from the one before, then print it
+# gets unique values from the list of winning teams (each team appears only once)
+i = 0
+team_list2 = []
+for i in range(len(team_list)):
+    if team_list[i] == team_list[i-1]:
+        continue
+    else:
+        team_list2.append(team_list[i])
+    i += 1
+print(team_list2)
+# puts each country into its own dictionary
+# creates list of dictionaries using countries
+country = 0
+wins = 0
+team_list_dict = []
+for country in range (len(team_list2)):
+    team_dict = {}
+    team_dict['country'] = team_list2[country]
+    country += 1
+    team_list_dict.append(team_dict)
+print(team_list_dict)
+
+# counts the number of times each country is repeated (number of wins)
+wins = []
+w = 0
+for w in range(len(team_list)):
+    win_num = team_list.count(team_list[w])
+    if team_list[w] == team_list[w-1]:
+        w += 1
+        continue
+    wins.append(win_num)
+    w += 1
+
+# trying to add the number of wins for each country ot their respective dictionaries in the list of dictionaries
+t = 0
+ws = 0
+for t in range(len(team_list_dict)):
+    team_dict['wins'] = int(wins[ws])
+    t += 1
+    print(team_list_dict)
