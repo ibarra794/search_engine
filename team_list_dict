@@ -1,3 +1,6 @@
+
+from bs4 import BeautifulSoup
+
 with open('wc_winners.html', 'r') as file:
     content = file.read()
 soup = BeautifulSoup(content, 'lxml')
@@ -13,45 +16,46 @@ for team in team_tags:
 
 # alphabeltize list
 team_list.sort()
-print(team_list)
+#print(team_list)
 
 # if the country is different from the one before, then print it
 # gets unique values from the list of winning teams (each team appears only once)
 i = 0
-team_list2 = []
+team_list_cleaned = []
 for i in range(len(team_list)):
     if team_list[i] == team_list[i-1]:
         continue
     else:
-        team_list2.append(team_list[i])
+        team_list_cleaned.append(team_list[i])
     i += 1
-print(team_list2)
+#print(team_list_cleaned)
+
 # puts each country into its own dictionary
-# creates list of dictionaries using countries
+# creates list of dictionaries with 'country' and 'wins' as keys
 country = 0
-wins = 0
 team_list_dict = []
-for country in range (len(team_list2)):
-    team_dict = {}
-    team_dict['country'] = team_list2[country]
+for country in range (len(team_list_cleaned)):
+    team = {}
+    team['country'] = team_list_cleaned[country]
+    wins = team_list.count(team_list_cleaned[country])
+    #print(wins)
+    team['wins'] = wins
+    team_list_dict.append(team)
     country += 1
-    team_list_dict.append(team_dict)
-print(team_list_dict)
+#print(team_list_dict)
 
-# counts the number of times each country is repeated (number of wins)
-wins = []
-w = 0
-for w in range(len(team_list)):
-    win_num = team_list.count(team_list[w])
-    if team_list[w] == team_list[w-1]:
-        w += 1
-        continue
-    wins.append(win_num)
-    w += 1
+#search for result in the list of dictionaries containing the teams and their wins
+term = input("Enter team name: ").lower()
+result_list = []
+tm = 0
+#search for term
+for team in team_list_dict:
+    if term in team['country'].lower():
+        result_list.append(team)
 
-# trying to add the number of wins for each country ot their respective dictionaries in the list of dictionaries
-t = 0
-ws = 0
+#print wins
+for team in result_list:
+    print(team['wins'])
 for t in range(len(team_list_dict)):
     team_dict['wins'] = int(wins[ws])
     t += 1
