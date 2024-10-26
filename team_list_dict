@@ -56,7 +56,3 @@ for team in team_list_dict:
 #print wins
 for team in result_list:
     print(team['wins'])
-for t in range(len(team_list_dict)):
-    team_dict['wins'] = int(wins[ws])
-    t += 1
-    print(team_list_dict)
